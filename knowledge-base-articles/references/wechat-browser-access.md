@@ -87,8 +87,14 @@ gsettings set org.gnome.system.proxy mode 'none'
 | 方案 | 失败原因 |
 |------|---------|
 | Playwright + CloakBrowser stealth args + 关闭代理 | HTTP 200 但显示"环境异常" |
-| CloakBrowser 复用 Playwright Chromium | `launch()` 强制调用 `ensure_binary()` 仍尝试下载 |
-| `CLOAKBROWSER_BINARY_PATH` 复用 Playwright Chromium | `launch_async` 内部走 Sync Playwright，在 asyncio 里报错 |
+| `CLOAKBROWSER_BINARY_PATH` 复用 Playwright Chromium | `launch_async()` 内部**无条件**调用 `ensure_binary()`，环境变量无效；且内部走 Sync Playwright 在 asyncio 里报错 |
+| 直接 `launch()`（非 async）在 asyncio 中调用 | `launch()` 是 sync 版本，在 asyncio loop 内阻塞或报错 |
+| `ensure_binary()` 下载超时 | 网络不通 GitHub/CDN — 必须先启动 Mihomo 系统代理 |
+
+**根本教训**：`launch_async()` 的 `ensure_binary()` 调用**不可绕过**，没有 `CLOAKBROWSER_BINARY_PATH` 这条捷径。唯一可行路径：系统代理 → pip install → 下载缓存 → `launch_async` 正常使用。
+| `ensure_binary()` 下载超时 | 网络不通 GitHub/CDN — 必须先启动 Mihomo 系统代理 |
+
+**根本教训**：`launch_async()` 的 `ensure_binary()` 调用**不可绕过**，没有 `CLOAKBROWSER_BINARY_PATH` 这条捷径。唯一可行路径：系统代理 → pip install → 下载缓存 → `launch_async` 正常使用。
 
 ## Mihomo 相关
 

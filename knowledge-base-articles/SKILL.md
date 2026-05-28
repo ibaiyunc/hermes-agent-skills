@@ -38,7 +38,12 @@ metadata:
 |---------|---------|
 | `arm-reverse` | ARM / Android Native 逆向 |
 | `app-reverse` | APP 抓包、SSL Pinning、Android 逆向 |
-| `network-proxy` | 网络代理、Cloudflare Worker、爬虫技术 |
+| `network-proxy` | 网络代理、Cloudflare Worker、爬虫技术、反检测浏览器 |
+| `ai-agent` | AI Agent、MCP、免杀、工具推荐 |
+| `ai-reverse` | AI 逆向、AST 反混淆、代码分析 |
+| `windows-reverse` | Windows 逆向、ImHex、IDA Pro |
+| `ctf-everyday` | CTF 每日挑战 |
+| `quantum-computing` | 量子计算 |
 
 如文章不属于现有分类，可在 `/home/baiyun/knowledge/` 下新建分类目录。
 
